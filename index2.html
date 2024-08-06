@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflector Studios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --header-bg: linear-gradient(135deg, #e0e0e0, #ffffff);
+            --section-bg: #ffffff;
+            --accent-color: #ff6b6b;
+            --header-text-color: #000;
+        }
+        body.dark-mode {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --header-bg: linear-gradient(135deg, #121212, #1a1a1a);
+            --section-bg: #1a1a1a;
+            --accent-color: #ff9f43;
+            --header-text-color: #fff;
+        }
+        body {
+            font-family: 'IBM Plex Serif', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: var(--header-bg);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            color: var(--header-text-color);
+        }
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li a {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        section {
+            background-color: var(--section-bg);
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 1200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent-color);
+        }
+        .interactive-element {
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .interactive-element:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        #mode-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .research-area {
+            background-color: rgba(255, 107, 107, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        #visualization {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Reflector Studios</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#collaborate">Collaborate</a></li>
+            </ul>
+        </nav>
+        <div id="mode-toggle" onclick="toggleDarkMode()">🌓</div>
+    </header>
+
+    <main>
+        <section id="hero" class="interactive-element">
+            <h2>Explore the Frontiers of Digital Art and Technology</h2>
+            <p>Immerse yourself in the fusion of creativity, computation, and perception</p>
+            <div id="visualization"></div>
+        </section>
+
+        <section id="about" class="fade-in">
+            <h2>About</h2>
+            <p>Reflector Studios is an emerging interdisciplinary studio that merges advanced web technologies, artificial intelligence, and artistic expression to create dynamic, interactive digital experiences. Our research pushes the boundaries of visual and auditory perception, exploring new paradigms in human-computer interaction and digital art creation.</p>
+        </section>
+
+        <section id="research" class="fade-in">
+            <h2>Research Areas</h2>
+            <div class="research-grid">
+                <div class="research-area interactive-element">
+                    <h3>Real-time Rendering</h3>
+                    <p>Advancing techniques for complex, interactive 3D environments</p>
+                </div>
+                <div class="research-area interactive-element">
+                    <h3>AI-driven Generative Art</h3>
+                    <p>Developing systems for creating evolving digital artworks</p>
+                </div>
+                <div class="research-area interactive-element">
+                    <h3>Multi-sensory Experiences</h3>
+                    <p>Integrating visual, auditory, and haptic elements in digital art</p>
+                </div>
+                <div class="research-area interactive-element">
+                    <h3>Data Visualization</h3>
+                    <p>Exploring the intersection of data, art, and interactivity</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="fade-in">
+            <h2>Featured Projects</h2>
+            <!-- Project showcase will be dynamically populated -->
+        </section>
+
+        <section id="resources" class="fade-in">
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="#lexicon">Comprehensive Lexicon</a></li>
+                <li><a href="#taxonomy">Visual Forms Taxonomy</a></li>
+                <li><a href="#ontology">Field Ontology</a></li>
+                <li><a href="#curriculum">Self-paced Curriculum</a></li>
+            </ul>
+        </section>
+
+        <section id="collaborate" class="fade-in">
+            <h2>Collaborate</h2>
+            <p>Join us in pushing the boundaries of digital art and technology. We're always looking for passionate individuals and organizations to collaborate with.</p>
+            <a href="#contact" class="btn">Get in Touch</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Immersive Computational Aesthetics Lab. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Three.js visualization
+        function initVisualization() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, 400);
+            document.getElementById('visualization').appendChild(renderer.domElement);
+
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+            const material = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    varying vec3 vPosition;
+                    void main() {
+                        vUv = uv;
+                        vPosition = position;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    varying vec2 vUv;
+                    varying vec3 vPosition;
+                    void main() {
+                        vec3 color = 0.5 + 0.5 * cos(time + vUv.xyx + vec3(0, 2, 4));
+                        float shading = smoothstep(-10.0, 10.0, vPosition.y);
+                        gl_FragColor = vec4(color * shading, 0.5);
+                    }
+                `,
+                transparent: true
+            });
+            const torusKnot = new THREE.Mesh(geometry, material);
+            scene.add(torusKnot);
+
+            camera.position.z = 30;
+
+            function animate(time) {
+                requestAnimationFrame(animate);
+                torusKnot.rotation.x += 0.01;
+                torusKnot.rotation.y += 0.01;
+                material.uniforms.time.value = time * 0.001;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Fade-in animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        window.addEventListener('load', initVisualization);
+    </script>
+</body>
+</html>
