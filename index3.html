@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reflector - Amplify Your Story. Illuminate Your Vision.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Stylesheets -->
+    <style>
+        /* CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --accent-color: #0066ff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #00ccff;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .cta-buttons a {
+            margin: 0 1rem;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-buttons a:hover {
+            background-color: darken(var(--accent-color), 10%);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timeline {
+            width: 80%;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 1rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            right: -0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        /* Capabilities Section */
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .capability-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .capability-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* Talent Development Section */
+        .talent-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .infographics {
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .infographic-item {
+            width: 200px;
+            text-align: center;
+        }
+
+        /* Vision Section */
+        .vision-content {
+            text-align: center;
+        }
+
+        .roadmap {
+            margin-top: 3rem;
+        }
+
+        .roadmap-item {
+            margin-bottom: 2rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section a {
+            background-color: #ffffff;
+            color: var(--accent-color);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .cta-section a:hover {
+            background-color: darken(#ffffff, 10%);
+            color: darken(var(--accent-color), 10%);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item::before {
+                left: 10px;
+            }
+        }
+
+        /* Custom Properties for Dark Mode */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+            --card-bg: #1e1e1e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Reflector</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#capabilities">Capabilities</a>
+            <a href="#talent">Talent Development</a>
+            <a href="#vision">Vision</a>
+            <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Amplify Your Story.<br>Illuminate Your Vision.</h1>
+        <p>From generative AI to custom software and natural language workflows, Reflector helps you create smarter, faster, and better.</p>
+        <div class="cta-buttons">
+            <a href="#capabilities">Explore Solutions</a>
+            <a href="#contact">Book a Demo</a>
+            <a href="#contact">Start Building with Us</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <p>Reflector began as an experimental generative AI lab and has evolved into a leader in custom AI models, prompt engineering, and automation workflows for creative industries. We are committed to merging technology, artistry, and collaboration.</p>
+            <!-- Timeline Animation -->
+            <div class="timeline">
+                <!-- Timeline Items -->
+                <div class="timeline-item">
+                    <h3>2020</h3>
+                    <p>Founded as an experimental AI lab.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2021</h3>
+                    <p>Developed first custom AI models for storytelling.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2022</h3>
+                    <p>Launched automation workflows for production pipelines.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2023</h3>
+                    <p>Recognized as industry leader in AI innovation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section id="capabilities">
+        <h2 class="section-title">Our Capabilities</h2>
+        <div class="capabilities-grid">
+            <!-- Capability 1 -->
+            <div class="capability-card">
+                <h3>Generative AI Solutions</h3>
+                <p>Tools for text-to-content creation and storytelling.</p>
+            </div>
+            <!-- Capability 2 -->
+            <div class="capability-card">
+                <h3>Custom AI Model Training</h3>
+                <p>Building and training AI models tailored to specific creative workflows.</p>
+            </div>
+            <!-- Capability 3 -->
+            <div class="capability-card">
+                <h3>Automation Workflows</h3>
+                <p>Streamlining processes for faster, smarter production pipelines.</p>
+            </div>
+            <!-- Capability 4 -->
+            <div class="capability-card">
+                <h3>Custom Software Solutions & Agents</h3>
+                <p>Tailored software and AI agents for production hubs and creative organizations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Talent Development Section -->
+    <section id="talent">
+        <h2 class="section-title">Talent Development</h2>
+        <div class="talent-content">
+            <p>Reflector is dedicated to empowering regional talent and industry innovators through educational initiatives.</p>
+            <div class="infographics">
+                <div class="infographic-item">
+                    <h3>100+</h3>
+                    <p>Workshops Conducted</p>
+                </div>
+                <div class="infographic-item">
+                    <h3>500+</h3>
+                    <p>Talents Trained</p>
+                </div>
+                <div class="infographic-item">
+                    <h3>50+</h3>
+                    <p>AI Models Customized</p>
+                </div>
+            </div>
+            <a href="#contact" class="cta-button">Join Our Programs</a>
+        </div>
+    </section>
+
+    <!-- Vision and Future Section -->
+    <section id="vision">
+        <h2 class="section-title">Our Vision</h2>
+        <div class="vision-content">
+            <p>Reflector envisions a future where cognitive media and entertainment are driven by tools that amplify creativity while reducing complexity.</p>
+            <!-- Roadmap -->
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <h3>2024</h3>
+                    <p>Launch of next-gen storytelling AI platform.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>2025</h3>
+                    <p>Expansion into global markets with localized AI solutions.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>2026</h3>
+                    <p>Introduction of AI-driven gaming development tools.</p>
+                </div>
+            </div>
+            <p>"Join Us in Building the Future of AI and Creativity."</p>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta-section" id="contact">
+        <h2>Let’s Build Together</h2>
+        <p>Ready to amplify your story and illuminate your vision?</p>
+        <a href="mailto:contact@reflector.vision">Contact Reflector</a>
+        <a href="#capabilities">Explore AI Solutions</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Reflector. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a>
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.removeItem('theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load Theme on Page Load
+        (function() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        })();
+
+        // Placeholder for interactive animations and background
+        // Implement interactive generative background and animations here
+    </script>
+</body>
+</html>
