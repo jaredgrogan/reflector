@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reflector - AI Innovation Hub for Film, Gaming, and Digital Media Production">
+    <title>Reflector - AI Innovation Hub</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #2563eb, #22c55e);
+            --primary-hover: linear-gradient(135deg, #1d4ed8, #16a34a);
+            --text: #111827;
+            --text-secondary: #4b5563;
+            --bg: #ffffff;
+            --bg-secondary: #f9fafb;
+            --gradient-dark: linear-gradient(135deg, #000000, #1e1e1e);
+            --gradient-light: linear-gradient(135deg, #f3f4f6, #f9fafb);
+        }
+
+        [data-theme="dark"] {
+            --text: #ffffff;
+            --text-secondary: #9ca3af;
+            --bg: var(--gradient-dark);
+            --bg-secondary: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.5;
+            color: var(--text);
+            background: var(--bg);
+            min-height: 100vh;
+        }
+
+        .nav {
+            position: fixed;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="dark"] .nav {
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            position: relative;
+            margin-right: 12px;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            transform: rotate(45deg);
+            animation: pulse 2s infinite;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: var(--bg);
+            border-radius: 6px;
+            transform: rotate(-45deg);
+        }
+
+        [data-theme="dark"] .logo-icon::after {
+            background: var(--bg-secondary);
+        }
+
+        .button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .button-primary {
+            background: var(--primary-gradient);
+            color: white;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-hover);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .button-primary:hover::before {
+            opacity: 1;
+        }
+
+        .button-outline {
+            background: transparent;
+            position: relative;
+            color: white;
+        }
+
+        .button-outline::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--primary-gradient);
+            z-index: -1;
+            border-radius: 9999px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--text);
+            margin-right: 1rem;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(34, 197, 94, 0.1));
+            z-index: -1;
+        }
+
+        [data-theme="dark"] .hero::before {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(30, 30, 30, 0.5));
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .capabilities {
+            padding: 5rem 0;
+            background: var(--bg);
+        }
+
+        [data-theme="dark"] .capabilities {
+            background: var(--gradient-dark);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .section-title {
+            color: white;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            padding: 2rem;
+            border-radius: 1rem;
+            background: white;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+
+        [data-theme="dark"] .card {
+            background: var(--bg-secondary);
+        }
+
+        .card:hover {
+            border-image: var(--primary-gradient) 1;
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            color: transparent;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        [data-theme="dark"] .card h3 {
+            color: white;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+        }
+
+        .vision {
+            padding: 5rem 0;
+            background: var(--gradient-light);
+            text-align: center;
+        }
+
+        [data-theme="dark"] .vision {
+            background: var(--gradient-dark);
+        }
+
+        .cta {
+            padding: 5rem 0;
+            text-align: center;
+            background: var(--bg);
+        }
+
+        [data-theme="dark"] .cta {
+            background: var(--gradient-dark);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .footer {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            color: var(--text-secondary);
+        }
+
+        [data-theme="dark"] .footer {
+            border-top-color: #374151;
+        }
+
+        .typed-text {
+            display: inline-block;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background: currentColor;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.05); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .nav {
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                padding: 0 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>Reflector</span>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+            </button>
+            <button class="button button-primary">Book Demo</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>
+                <span class="typed-text"></span>
+                <span class="cursor">&nbsp;</span>
+            </h1>
+            <p>From generative AI to custom workflows and software, Reflector helps you create smarter, faster, and better.</p>
+            <div class="button-group">
+                <button class="button button-primary">Explore Solutions</button>
+                <button class="button button-outline">Start Building</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="capabilities">
+        <div class="container">
+            <h2 class="section-title">Our Capabilities</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Generative AI Solutions</h3>
+                    <p>Advanced tools for text-to-content creation and storytelling that transform your creative workflow.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>Custom AI Models</h3>
+                    <p>Tailored AI models designed specifically for your creative workflows and production needs.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Automation Workflows</h3>
+                    <p>Streamline your production pipeline with intelligent automation and process optimization.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>Custom Software & Agents</h3>
+                    <p>Intelligent software solutions built specifically for media and entertainment production.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>Educational Initiatives</h3>
+                    <p>Comprehensive training in prompt engineering, automation workflows, and AI-driven tools.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>Integration Services</h3>
+                    <p>Seamless integration of AI solutions into your existing production ecosystem.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="vision">
+        <div class="container">
+            <h2 class="section-title">Building the Future of AI-Driven Creativity</h2>
+            <p>We're redefining cognitive media and entertainment by merging cutting-edge technology with human creativity.</p>
+            <button class="button button-primary">Join Our Vision</button>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2 class="section-title">Ready to Transform Your Creative Process?</h2>
+            <p>Partner with Reflector to unlock the full potential of AI in your creative workflows.</p>
+            <div class="button-group">
+                <button class="button button-primary">Book a Demo</button>
+                <button class="button button-outline">Contact Us</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 Reflector. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const text = "Amplify Your Story.\nIlluminate Your Vision.";
+        const typedText = document.querySelector('.typed-text');
+        const cursor = document.querySelector('.cursor');
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < text.length) {
+                if (text.charAt(charIndex) === '\n') {
+                    typedText.innerHTML += '<br>';
+                } else {
+                    typedText.innerHTML += text.charAt(charIndex);
+                }
+                charIndex++;
+                setTimeout(type, 100);
+            } else {
+                cursor.style.animation = 'none';
+                cursor.style.opacity = '0';
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+        }
+
+        // Initialize theme based on system
+// Initialize theme based on system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        // Theme toggle button event listener
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Start typing animation when the page loads
+        window.addEventListener('load', () => {
+            setTimeout(type, 1000);
+        });
+
+        // Handle system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            document.documentElement.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
