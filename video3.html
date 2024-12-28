@@ -75,9 +75,9 @@
             height: auto;
             transform: translateX(-50%) translateY(-50%);
             object-fit: cover;
-            opacity: 0;
+            opacity: 1;
             z-index: -1;
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.3s ease-out;
         }
 
         .hero-video.active {
@@ -174,7 +174,7 @@
             <source src="/launchpad.mp4" type="video/mp4">
         </video>
         <video id="video4" class="hero-video" autoplay muted playsinline>
-            <source src="/crew.mp4" type="video/mp4">
+            <source src="/moon.mp4" type="video/mp4">
         </video>
         
         <div class="container mx-auto px-6 text-center hero-content">
@@ -203,7 +203,7 @@
             <h2 class="text-4xl font-bold mb-12 metallic-text text-center">About Reflector</h2>
             <div class="glass p-8 rounded-2xl max-w-3xl mx-auto">
                 <p class="text-xl leading-relaxed text-gray-300">
-                    Reflector is an AI innovation platform and studio transforming media, gaming, and entertainment through generative AI, automation, and custom solutions.
+                    Reflector is an AI innovation hub transforming media, gaming, and entertainment through generative AI, automation, and custom solutions.
                 </p>
             </div>
         </div>
@@ -288,30 +288,46 @@
             });
 
             function playNextVideo() {
+                // Start fade out of current video
                 videos[currentVideoIndex].classList.remove('active');
-                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
                 
-                const nextVideo = videos[currentVideoIndex];
-                
-                if (nextVideo.currentTime === nextVideo.duration) {
-                    nextVideo.currentTime = 0;
-                }
-                
-                const playPromise = nextVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        nextVideo.classList.add('active');
-                    }).catch(error => {
-                        console.log("Auto-play prevented:", error);
-                    });
-                }
+                // Wait for fade out to complete
+                setTimeout(() => {
+                    // Update to next video
+                    currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                    const nextVideo = videos[currentVideoIndex];
+                    
+                    // Reset video if needed
+                    if (nextVideo.currentTime === nextVideo.duration) {
+                        nextVideo.currentTime = 0;
+                    }
+                    
+                    // Play next video immediately at full opacity
+                    const playPromise = nextVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            nextVideo.classList.add('active');
+                        }).catch(error => {
+                            console.log("Auto-play prevented:", error);
+                        });
+                    }
+                }, 300); // Match the CSS transition duration
             }
 
             videos.forEach((video, index) => {
                 if (index !== 0) {
                     video.classList.remove('active');
+                    video.currentTime = 0; // Ensure all videos start from beginning
                 }
-                video.addEventListener('ended', playNextVideo);
+                
+                // Add timeupdate listener to check for near-end
+                video.addEventListener('timeupdate', function() {
+                    // Start transition 0.3s before video ends
+                    if (video.currentTime >= video.duration - 0.3) {
+                        video.removeEventListener('timeupdate', arguments.callee);
+                        playNextVideo();
+                    }
+                });
             });
 
             const playPromise = videos[0].play();
