@@ -275,6 +275,7 @@
         reveal();
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Video cycling functionality
             const videos = [
                 document.getElementById('video1'),
                 document.getElementById('video2'),
@@ -283,59 +284,33 @@
             ];
             let currentVideoIndex = 0;
 
-            videos.forEach(video => {
-                video.load();
-            });
-
-            function playNextVideo() {
-                // Start fade out of current video
-                videos[currentVideoIndex].classList.remove('active');
-                
-                // Wait for fade out to complete
-                setTimeout(() => {
-                    // Update to next video
-                    currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-                    const nextVideo = videos[currentVideoIndex];
-                    
-                    // Reset video if needed
-                    if (nextVideo.currentTime === nextVideo.duration) {
-                        nextVideo.currentTime = 0;
-                    }
-                    
-                    // Play next video immediately at full opacity
-                    const playPromise = nextVideo.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            nextVideo.classList.add('active');
-                        }).catch(error => {
-                            console.log("Auto-play prevented:", error);
-                        });
-                    }
-                }, 300); // Match the CSS transition duration
-            }
-
+            // Initialize all videos
             videos.forEach((video, index) => {
                 if (index !== 0) {
                     video.classList.remove('active');
-                    video.currentTime = 0; // Ensure all videos start from beginning
                 }
-                
-                // Add timeupdate listener to check for near-end
-                video.addEventListener('timeupdate', function() {
-                    // Start transition 0.3s before video ends
-                    if (video.currentTime >= video.duration - 0.3) {
-                        video.removeEventListener('timeupdate', arguments.callee);
-                        playNextVideo();
-                    }
+                // Ensure videos start from beginning
+                video.currentTime = 0;
+                // Listen for video end
+                video.addEventListener('ended', function() {
+                    // Start fade out
+                    this.classList.remove('active');
+                    
+                    // Wait for fade out to complete before starting next video
+                    setTimeout(() => {
+                        // Update index
+                        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                        // Play next video
+                        const nextVideo = videos[currentVideoIndex];
+                        nextVideo.currentTime = 0;
+                        nextVideo.classList.add('active');
+                        nextVideo.play();
+                    }, 300);
                 });
             });
 
-            const playPromise = videos[0].play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Auto-play prevented:", error);
-                });
-            }
+            // Start the first video
+            videos[0].play();
         });
     </script>
 </body>
