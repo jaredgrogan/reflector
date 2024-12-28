@@ -77,7 +77,6 @@
             object-fit: cover;
             opacity: 1;
             z-index: -1;
-            transition: opacity 0.3s ease-out;
         }
 
         .hero-video.active {
@@ -282,28 +281,27 @@
                 document.getElementById('video3'),
                 document.getElementById('video4')
             ];
-            let currentIndex = 0;
 
-            // When a video ends, fade it out and start the next one
+            // Hide all videos except the first one
             videos.forEach((video, index) => {
+                if (index !== 0) {
+                    video.classList.remove('active');
+                }
+                
+                // Add ended event listener
                 video.addEventListener('ended', function() {
-                    // Start fade out of current video
+                    // Hide current video
                     this.classList.remove('active');
                     
-                    // Set up next video
+                    // Show and play next video
                     const nextIndex = (index + 1) % videos.length;
                     const nextVideo = videos[nextIndex];
-                    nextVideo.currentTime = 0;
-                    
-                    // After fade out completes, play next video
-                    setTimeout(() => {
-                        nextVideo.classList.add('active');
-                        nextVideo.play();
-                    }, 300);
+                    nextVideo.classList.add('active');
+                    nextVideo.play();
                 });
             });
 
-            // Start first video
+            // Start the first video
             videos[0].play();
         });
     </script>
