@@ -164,17 +164,17 @@
     </nav>
 
     <section class="hero-section">
-        <video id="video1" class="hero-video active" autoplay muted playsinline>
-            <source src="/astro.mp4" type="video/mp4">
+        <video id="heroVideo1" class="hero-video active" muted playsinline>
+            <source src="astro.mp4" type="video/mp4">
         </video>
-        <video id="video2" class="hero-video" autoplay muted playsinline>
-            <source src="/mars1.mp4" type="video/mp4">
+        <video id="heroVideo2" class="hero-video" muted playsinline>
+            <source src="mars1.mp4" type="video/mp4">
         </video>
-        <video id="video3" class="hero-video" autoplay muted playsinline>
-            <source src="/launchpad.mp4" type="video/mp4">
+        <video id="heroVideo3" class="hero-video" muted playsinline>
+            <source src="launchpad.mp4" type="video/mp4">
         </video>
-        <video id="video4" class="hero-video" autoplay muted playsinline>
-            <source src="/moon.mp4" type="video/mp4">
+        <video id="heroVideo4" class="hero-video" muted playsinline>
+            <source src="moon.mp4" type="video/mp4">
         </video>
         
         <div class="container mx-auto px-6 text-center hero-content">
@@ -275,42 +275,51 @@
         reveal();
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Video cycling functionality
-            const videos = [
-                document.getElementById('video1'),
-                document.getElementById('video2'),
-                document.getElementById('video3'),
-                document.getElementById('video4')
+            const videoSequence = [
+                document.getElementById('heroVideo1'),
+                document.getElementById('heroVideo2'),
+                document.getElementById('heroVideo3'),
+                document.getElementById('heroVideo4')
             ];
-            let currentVideoIndex = 0;
+            
+            let currentIndex = 0;
 
-            // Initialize all videos
-            videos.forEach((video, index) => {
-                if (index !== 0) {
-                    video.classList.remove('active');
+            function playVideo(index) {
+                // Hide all videos
+                videoSequence.forEach(v => {
+                    v.classList.remove('active');
+                    v.pause();
+                    v.currentTime = 0;
+                });
+
+                // Play the current video
+                const currentVideo = videoSequence[index];
+                currentVideo.classList.add('active');
+                
+                const playPromise = currentVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.error("Playback error:", e);
+                    });
                 }
-                // Ensure videos start from beginning
-                video.currentTime = 0;
-                // Listen for video end
-                video.addEventListener('ended', function() {
-                    // Start fade out
-                    this.classList.remove('active');
+            }
+
+            // Set up the video sequence
+            videoSequence.forEach((video, index) => {
+                video.addEventListener('ended', () => {
+                    // Remove active class from current video (starts fade out)
+                    video.classList.remove('active');
                     
-                    // Wait for fade out to complete before starting next video
+                    // After fade out, play next video
                     setTimeout(() => {
-                        // Update index
-                        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-                        // Play next video
-                        const nextVideo = videos[currentVideoIndex];
-                        nextVideo.currentTime = 0;
-                        nextVideo.classList.add('active');
-                        nextVideo.play();
+                        currentIndex = (index + 1) % videoSequence.length;
+                        playVideo(currentIndex);
                     }, 300);
                 });
             });
 
-            // Start the first video
-            videos[0].play();
+            // Start the sequence
+            playVideo(0);
         });
     </script>
 </body>
