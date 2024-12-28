@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Head section remains exactly as in your code -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/reflector.jpg" type="image/svg+xml">
     <style>
-        /* Your existing styles remain unchanged */
         :root {
             --gold-deep: #724b15;
             --gold-mid: #c29d56;
@@ -79,18 +77,78 @@
             object-fit: cover;
             opacity: 0;
             z-index: -1;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .hero-video.active {
             opacity: 1;
         }
 
-        /* Rest of your existing styles remain unchanged */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background: var(--gold-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gold-gradient);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(194, 157, 86, 0.3);
+            filter: brightness(1.2);
+        }
+
+        .capability-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(194, 157, 86, 0.2);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: auto;
+                min-height: 100vh;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation remains unchanged -->
     <nav class="fixed w-full z-50 glass">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
@@ -105,7 +163,6 @@
         </div>
     </nav>
 
-    <!-- Modified Hero Section with multiple videos -->
     <section class="hero-section">
         <video id="video1" class="hero-video active" autoplay muted playsinline>
             <source src="/astro.mp4" type="video/mp4">
@@ -121,7 +178,6 @@
         </video>
         
         <div class="container mx-auto px-6 text-center hero-content">
-            <!-- Hero content remains unchanged -->
             <div class="mb-16">
                 <img src="reflector1.gif" alt="Reflector Logo" style="width: 100px; height: 100px;" class="mx-auto mb-8">
                 <h1 class="text-5xl md:text-7xl font-bold mb-6 metallic-text" style="font-family: 'Playfair Display', serif; animation: shimmer 3s linear infinite; text-shadow: 0 0 10px rgba(194, 157, 86, 0.3);">
@@ -131,9 +187,9 @@
                     GenAI for Creatives
                 </p>
                 <div class="flex flex-col md:flex-row justify-center gap-6">
-                    <button class="cta-button px-8 py-4 rounded-full text-black font-semibold">
+                    <a href="#capabilities" class="cta-button px-8 py-4 rounded-full text-black font-semibold inline-block hover:shadow-lg">
                         Explore Solutions
-                    </button>
+                    </a>
                     <button class="glass px-8 py-4 rounded-full font-semibold border border-opacity-20">
                         Partner with Us
                     </button>
@@ -142,11 +198,65 @@
         </div>
     </section>
 
-    <!-- Rest of your sections remain unchanged -->
+    <section id="about" class="py-24 reveal">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-12 metallic-text text-center">About Reflector</h2>
+            <div class="glass p-8 rounded-2xl max-w-3xl mx-auto">
+                <p class="text-xl leading-relaxed text-gray-300">
+                    Reflector is an AI innovation hub transforming media, gaming, and entertainment through generative AI, automation, and custom solutions.
+                </p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Modified JavaScript for video cycling -->
+    <section id="capabilities" class="py-24 reveal">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 metallic-text text-center">Our Capabilities</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="capability-card glass p-8 rounded-2xl">
+                    <h3 class="text-2xl mb-4 metallic-text" style="font-family: 'Playfair Display', serif;">Generative AI</h3>
+                    <p class="text-gray-300">Transform workflows with generative storytelling tools.</p>
+                </div>
+                <div class="capability-card glass p-8 rounded-2xl">
+                    <h3 class="text-2xl mb-4 metallic-text" style="font-family: 'Playfair Display', serif;">Custom AI Models</h3>
+                    <p class="text-gray-300">Tailored solutions for unique creative challenges.</p>
+                </div>
+                <div class="capability-card glass p-8 rounded-2xl">
+                    <h3 class="text-2xl mb-4 metallic-text" style="font-family: 'Playfair Display', serif;">Automation Workflows</h3>
+                    <p class="text-gray-300">Streamline production pipelines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="py-24 reveal">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-12 metallic-text">Building the Future Together</h2>
+            <div class="glass p-8 rounded-2xl max-w-3xl mx-auto">
+                <p class="text-xl leading-relaxed text-gray-300 mb-8">
+                    Collaborate with Reflector to create transformative solutions for AI-driven storytelling and innovation.
+                </p>
+                <button class="cta-button px-8 py-4 rounded-full text-black font-semibold">
+                    Partner with Us
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="glass py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="metallic-text mb-4 md:mb-0">© 2025 Reflector</p>
+                <div class="flex space-x-6">
+                    <a href="https://www.linkedin.com/company/reflectorstudios" class="nav-link">LinkedIn</a>
+                    <a href="www.instagram.reflectorstudios.art" class="nav-link">IG</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Your existing reveal animations code
         const reveals = document.querySelectorAll('.reveal');
 
         function reveal() {
@@ -164,7 +274,6 @@
         window.addEventListener('scroll', reveal);
         reveal();
 
-        // New video cycling code
         document.addEventListener('DOMContentLoaded', function() {
             const videos = [
                 document.getElementById('video1'),
@@ -174,27 +283,20 @@
             ];
             let currentVideoIndex = 0;
 
-            // Preload all videos
             videos.forEach(video => {
                 video.load();
             });
 
             function playNextVideo() {
-                // Fade out current video
                 videos[currentVideoIndex].classList.remove('active');
-                
-                // Update index
                 currentVideoIndex = (currentVideoIndex + 1) % videos.length;
                 
-                // Prepare next video
                 const nextVideo = videos[currentVideoIndex];
                 
-                // Reset video if it's ended
                 if (nextVideo.currentTime === nextVideo.duration) {
                     nextVideo.currentTime = 0;
                 }
                 
-                // Play and fade in next video
                 const playPromise = nextVideo.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -205,18 +307,13 @@
                 }
             }
 
-            // Set up the video cycling
             videos.forEach((video, index) => {
-                // Initialize all videos except the first as inactive
                 if (index !== 0) {
                     video.classList.remove('active');
                 }
-
-                // Add ended event listener to each video
                 video.addEventListener('ended', playNextVideo);
             });
 
-            // Start the first video
             const playPromise = videos[0].play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
