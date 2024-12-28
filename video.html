@@ -56,7 +56,30 @@
 
         .hero-section {
             height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: radial-gradient(circle at center, rgba(194, 157, 86, 0.15) 0%, rgba(0, 0, 0, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            z-index: 0;
         }
 
         .nav-link {
@@ -139,7 +162,7 @@
     <nav class="fixed w-full z-50 glass">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="reflector.jpg" alt="Reflector Logo" class="h-8">
+                <img src="reflector1.gif" alt="Reflector Logo" class="h-8">
             </div>
             <div class="hidden md:flex space-x-8">
                 <a href="#about" class="nav-link">About</a>
